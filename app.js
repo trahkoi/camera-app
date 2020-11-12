@@ -1,23 +1,30 @@
-var constraints = { video: { facingMode: "environment" }, audio: false};
+var constraints = { 
+    video: { 
+        facingMode: { 
+            exact: "environment" 
+        }
+    }, 
+    audio: false 
+};
 
 const cameraView = document.querySelector("#camera-view"),
-      cameraOutput = document.querySelector("#camera-output"),
-      cameraSensor = document.querySelector("#camera-sensor"),
-      cameraTrigger = document.querySelector("#camera-trigger")
+    cameraOutput = document.querySelector("#camera-output"),
+    cameraSensor = document.querySelector("#camera-sensor"),
+    cameraTrigger = document.querySelector("#camera-trigger")
 
 function cameraStart() {
     navigator.mediaDevices
         .getUserMedia(constraints)
-        .then(function(stream){
+        .then(function (stream) {
             track = stream.getTracks()[0];
             cameraView.srcObject = stream;
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Something went wrong, fucktard", error);
         });
 }
 
-cameraTrigger.onclick = function() {
+cameraTrigger.onclick = function () {
     cameraSensor.width = cameraView.videoWidth;
     cameraSensor.height = cameraView.videoHeight;
     cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
